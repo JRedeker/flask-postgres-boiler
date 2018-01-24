@@ -1,0 +1,8 @@
+database_cfg:
+  host: localhost
+  user: username
+  password:
+  dbname:
+
+tables:
+  main:
