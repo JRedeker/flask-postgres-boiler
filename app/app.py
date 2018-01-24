@@ -1,8 +1,10 @@
+# IMPORTS
 import psycopg2
 import yaml
 
 from flask import Flask
 
+# APP CONFIG
 app = Flask(__name__)
 app.config.from_pyfile('configure.py')
 
@@ -11,6 +13,7 @@ config = yaml.load(config_file)
 db = config['database_cfg']
 
 
+# CONTROLLERS
 @app.route("/dbtest")
 def dbtest():
 
@@ -28,6 +31,18 @@ def dbtest():
     except:
 
         return "Database not connected!"
+
+@app.errorhandler(500)
+def internal_error(error):
+    return render_template('errors/500.html'), 500
+
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('errors/404.html'), 404
+
+
+# 🚀 LAUNCH  🚀
 
 
 if __name__ == "__main__":
