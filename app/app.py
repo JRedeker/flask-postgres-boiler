@@ -2,7 +2,7 @@
 import psycopg2
 import yaml
 
-from flask import Flask
+from flask import Flask, render_template
 
 # APP CONFIG
 app = Flask(__name__)
