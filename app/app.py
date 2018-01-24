@@ -1,14 +1,10 @@
 # IMPORTS
-
-
-from flask import Flask, render_template
 import psycopg2
 import yaml
 
+from flask import Flask
 
 # APP CONFIG
-
-
 app = Flask(__name__)
 app.config.from_pyfile('configure.py')
 
@@ -16,18 +12,24 @@ config_file = open("config.yml", "r")
 config = yaml.load(config_file)
 db = config['database_cfg']
 
-connection = psycopg2.connect(**db)
-cursor = connection.cursor()
 
 # CONTROLLERS
+@app.route("/dbtest")
+def dbtest():
 
-
-@app.route("/")
-def hello():
     try:
+
+        connection = psycopg2.connect(**db)
+        cursor = connection.cursor()
+
         cursor.execute("""SELECT * FROM {}""".format(config['tables']['main']))
+
+        connection.close()
+
         return "Database connected"
+
     except:
+
         return "Database not connected!"
 
 @app.errorhandler(500)
@@ -44,4 +46,5 @@ def not_found_error(error):
 
 
 if __name__ == "__main__":
-    app.run()
+
+    app.run(host='0.0.0.0')
