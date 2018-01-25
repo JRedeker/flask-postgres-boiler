@@ -14,6 +14,11 @@ db = config['database_cfg']
 
 
 # CONTROLLERS
+@app.route("/")
+def hello():
+    return "App running"
+
+
 @app.route("/dbtest")
 def dbtest():
 
@@ -31,6 +36,7 @@ def dbtest():
     except:
 
         return "Database not connected!"
+
 
 @app.errorhandler(500)
 def internal_error(error):
