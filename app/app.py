@@ -1,7 +1,7 @@
 from database import db
 from flask import Flask
-from module_one import views
-from module_two import views
+from module_one.views import module_one
+from module_two.views import module_two
 
 
 def create_app():
@@ -10,8 +10,8 @@ def create_app():
     app.config.from_pyfile('configure.py')
     with app.app_context():
         db.init_app(app)
-        app.register_blueprint(views, url_prefix='')
-        app.register_blueprint(views,)
+        app.register_blueprint(module_one, url_prefix='')
+        app.register_blueprint(module_two, url_prefix='')
     return app
 
 
