@@ -1,7 +1,7 @@
 from database import db
 
 
-class Table(db.model):
+class Table(db.Model):
     __tablename__ = 'table_two'
 
     id = db.Column(db.Integer, primary_key=True)

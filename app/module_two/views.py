@@ -2,7 +2,7 @@ from flask import render_template
 from flask.blueprints import Blueprint
 from .models import *
 
-module_two = Blueprint('views', __name__, template_folder='templates', static_folder='static')
+module_two = Blueprint('module_two', __name__, template_folder='templates', static_folder='static')
 
 
 @module_two.route("/two")
