@@ -1,56 +1,27 @@
-# IMPORTS
-import psycopg2
-import yaml
-
-from flask import Flask, render_template
-
-# APP CONFIG
-app = Flask(__name__)
-app.config.from_pyfile('configure.py')
-
-config_file = open("config.yml", "r")
-config = yaml.load(config_file)
-db = config['database_cfg']
+from database import db
+from flask import Flask
+from module_one.views import views
 
 
-# CONTROLLERS
-@app.route("/")
-def hello():
-    return "App running"
+def create_app():
+    # create the application object and configure
+    app = Flask(__name__)
+    app.config.from_pyfile('configure.py')
+    with app.app_context():
+        db.init_app(app)
+        app.register_blueprint(views, url_prefix='')
+    return app
 
 
-@app.route("/dbtest")
-def dbtest():
-
-    try:
-
-        connection = psycopg2.connect(**db)
-        cursor = connection.cursor()
-
-        cursor.execute("""SELECT * FROM {}""".format(config['tables']['main']))
-
-        connection.close()
-
-        return "Database connected"
-
-    except:
-
-        return "Database not connected!"
+def setup_database(app):
+    with app.app_context():
+        db.create_all()
+        # db_mock_data.mock_data()
+        db.session.commit()
 
 
-@app.errorhandler(500)
-def internal_error(error):
-    return render_template('errors/500.html'), 500
-
-
-@app.errorhandler(404)
-def not_found_error(error):
-    return render_template('errors/404.html'), 404
-
-
-# 🚀 LAUNCH  🚀
-
-
+# Create app, setup db, and run app
 if __name__ == "__main__":
-
+    app = create_app()
+    setup_database(app)
     app.run(host='0.0.0.0')
