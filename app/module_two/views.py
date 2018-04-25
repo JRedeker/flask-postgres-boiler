@@ -13,5 +13,5 @@ def index():
 
 @module_two.route("/entries_two")
 def db_entries():
-    entries = Table.query.order_by(Table.name).all()
-    return render_template('pages/entries.html', title='Entries', entries=entries)
+    users = User.query.order_by(User.name).all()
+    return render_template('pages/entries.html', title='Entries', users=users)

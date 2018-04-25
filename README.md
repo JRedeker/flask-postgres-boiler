@@ -9,5 +9,6 @@ It includes a sample connection to a ``postgresql`` database
 
 ## Implementation Notes
 - Install packages from ``requirements.txt`` 📦
+- Rename modules 🤔
 - Configure ``configure.py`` with database information 🐘
 - Run ``app.py`` (make sure root) 🚀
