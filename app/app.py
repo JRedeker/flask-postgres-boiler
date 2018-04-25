@@ -1,6 +1,7 @@
 from database import db
 from flask import Flask
-from module_one.views import views
+from module_one import views
+from module_two import views
 
 
 def create_app():
@@ -10,13 +11,13 @@ def create_app():
     with app.app_context():
         db.init_app(app)
         app.register_blueprint(views, url_prefix='')
+        app.register_blueprint(views,)
     return app
 
 
 def setup_database(app):
     with app.app_context():
         db.create_all()
-        # db_mock_data.mock_data()
         db.session.commit()
 
 
