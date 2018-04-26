@@ -10,6 +10,7 @@ def create_app():
     app.config.from_pyfile('configure.py')
     with app.app_context():
         db.init_app(app)
+        # register blueprints from each module
         app.register_blueprint(module_one, url_prefix='')
         app.register_blueprint(module_two, url_prefix='')
     return app
@@ -17,6 +18,7 @@ def create_app():
 
 def setup_database(app):
     with app.app_context():
+        # build the database
         db.create_all()
         db.session.commit()
 
